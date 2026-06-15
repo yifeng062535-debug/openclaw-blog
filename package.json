@@ -4,12 +4,12 @@
   "license": "MIT",
   "version": "3.6.3",
   "scripts": {
-    "dev": "astro build && pagefind --site dist && astro dev",
+    "dev": "astro build && node src/scripts/run-pagefind.mjs && astro dev",
     "start": "astro dev",
     "new": "node src/scripts/create.cjs",
     "svg": "node src/scripts/fix-svg-transparent.mjs",
     "icons": "node src/scripts/generate-icons.mjs",
-    "build": "astro build && pagefind --site dist",
+    "build": "astro build && node src/scripts/run-pagefind.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
