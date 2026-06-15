@@ -1,0 +1,55 @@
+---
+import SearchButton from './search-button.astro'
+import ThemeButton from './theme-button.astro'
+
+import { config } from '@constant'
+import AvatarSvg from '@assets/avatar.svg'
+
+const pathname = Astro.url.pathname
+
+const links = [
+  { href: '/', label: '首页' },
+  { href: '/archive/', label: '归档' },
+  { href: '/tags/', label: '标签' },
+]
+---
+
+<header
+  class="sticky left-0 top-0 z-30 mx-auto flex w-full items-center border-b border-slate-900/8 bg-primary-light px-4 py-4 dark:border-white/8 dark:bg-primary-dark md:px-8"
+>
+  <nav
+    class="mx-auto flex w-[min(92vw,76rem)] items-center justify-between gap-4 px-1 py-3"
+  >
+    <a href="/" aria-label="Go to homepage" class="flex items-center gap-3">
+      <img src={AvatarSvg.src} class="h-10 w-10" alt="OpenClaw Signal logo" />
+      <div class="hidden sm:block">
+        <p class="text-sm font-semibold tracking-[0.04em] text-slate-900 dark:text-white">{config.siteName}</p>
+      </div>
+    </a>
+    <div class="hidden items-center gap-1 md:flex">
+      {
+        links.map((link) => {
+          const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
+
+          return (
+            <a
+              href={link.href}
+              class:list={[
+                'px-4 py-2 text-sm transition-colors',
+                isActive
+                  ? 'text-slate-950 dark:text-white'
+                  : 'text-slate-500 hover:text-slate-950 dark:text-slate-400 dark:hover:text-white',
+              ]}
+            >
+              {link.label}
+            </a>
+          )
+        })
+      }
+    </div>
+    <div class="flex items-center gap-1">
+      <SearchButton />
+      <ThemeButton />
+    </div>
+  </nav>
+</header>

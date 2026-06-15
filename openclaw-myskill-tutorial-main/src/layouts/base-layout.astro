@@ -1,0 +1,45 @@
+---
+import { config } from '@constant'
+import BaseHead from '@components/html-head.astro'
+import ReloadPrompt from '@components/reload-prompt.astro'
+
+const {
+  title,
+  description,
+  cover,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  tags = [],
+} = Astro.props.frontmatter || Astro.props
+---
+
+<html lang={config.language}>
+  <BaseHead
+    title={title}
+    description={description}
+    cover={cover ? cover.src : null}
+    type={type}
+    publishedTime={publishedTime}
+    modifiedTime={modifiedTime}
+    tags={tags}
+  />
+  <body transition:animate="none" class="bg-primary-light text-primary-dark dark:bg-primary-dark dark:text-white">
+    <div class="relative min-h-screen overflow-x-clip">
+      <div
+        class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[34rem] bg-[radial-gradient(circle_at_top_left,_rgba(231,142,95,0.12),_transparent_34%),radial-gradient(circle_at_top_right,_rgba(77,138,171,0.12),_transparent_32%),linear-gradient(180deg,_rgba(255,255,255,0.76),_transparent_100%)] dark:bg-[radial-gradient(circle_at_top_left,_rgba(231,142,95,0.11),_transparent_32%),radial-gradient(circle_at_top_right,_rgba(115,170,199,0.1),_transparent_36%),linear-gradient(180deg,_rgba(22,28,39,0.86),_transparent_100%)]"
+      ></div>
+      <div
+        class="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(180deg,_rgba(248,247,243,0.98),_rgba(241,244,247,0.96)_52%,_rgba(248,247,243,1))] dark:bg-[linear-gradient(180deg,_rgba(21,27,38,0.98),_rgba(17,23,33,0.99)_44%,_rgba(19,24,34,1))]"
+      ></div>
+
+      <slot />
+
+      <footer class="mx-auto flex w-[min(92vw,76rem)] items-center justify-between gap-4 px-4 pb-10 pt-6 text-sm text-slate-500 dark:text-slate-400 max-md:flex-col max-md:items-start">
+        <p>{config.siteName} · OpenClaw 教学归档</p>
+        <p>Searchable field notes for OpenClaw workflows.</p>
+      </footer>
+    </div>
+    <ReloadPrompt transition:persist />
+  </body>
+</html>

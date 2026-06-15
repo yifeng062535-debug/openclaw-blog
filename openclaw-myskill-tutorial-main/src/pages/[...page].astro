@@ -1,0 +1,97 @@
+---
+import { config } from '@constant'
+import type { Page, PaginateFunction } from 'astro'
+
+import NavHeader from '@components/nav-header.astro'
+import Pagination from '@components/pagination.astro'
+import PostList from '@components/post-list.astro'
+import BaseLayout from '@layouts/base-layout.astro'
+import { getAllPosts } from '@utils/all-posts'
+
+interface Props {
+  page: Page
+}
+
+export const getStaticPaths = async ({ paginate }: { paginate: PaginateFunction }) => {
+  const blogs = await getAllPosts()
+
+  return paginate(blogs, { pageSize: config.postsPerPage })
+}
+
+const { page } = Astro.props
+const allPosts = await getAllPosts()
+const latestPost = allPosts[0]
+---
+
+<BaseLayout title={config.siteName} description={config.description}>
+  <NavHeader />
+  <main class="min-h-dvh pb-8">
+    <section class="relative mt-6 py-10 md:py-16">
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_18rem] lg:items-end">
+        <div>
+          <p class="text-sm uppercase tracking-[0.18em] text-[oklch(48%_0.04_230)] dark:text-[oklch(76%_0.03_230)]">OpenClaw Signal</p>
+          <h1 class="mt-4 max-w-4xl text-[clamp(3.1rem,8vw,6.8rem)] font-bold leading-[0.92] text-slate-950 dark:text-white">
+            写给长期使用
+            <br />
+            OpenClaw 的人
+          </h1>
+          <p class="mt-6 max-w-[40rem] text-[1.06rem] leading-8 text-slate-600 dark:text-slate-300">
+            这里收录 OpenClaw 的入门路径、技能系统、仓库协作和实战工作流。内容尽量直接、可执行，适合持续查阅和回看。
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-500 dark:text-slate-400">
+            <span>入门指南</span>
+            <span>技能设计</span>
+            <span>仓库协作</span>
+            <span>博客搭建</span>
+          </div>
+
+          <div class="mt-10 flex flex-wrap gap-3">
+            {latestPost && (
+              <a
+                href={`/posts/${latestPost.data[config.linkAttr]}`}
+                class="rounded-full bg-[oklch(24%_0.03_238)] px-5 py-3 text-sm font-medium text-[oklch(98%_0.01_230)] no-underline dark:bg-[oklch(92%_0.02_230)] dark:text-[oklch(20%_0.03_238)]"
+              >
+                阅读最新文章
+              </a>
+            )}
+            <a
+              href="/archive/"
+              class="rounded-full border border-slate-900/14 px-5 py-3 text-sm font-medium no-underline dark:border-white/14"
+            >
+              查看全部文章
+            </a>
+          </div>
+        </div>
+
+        <div class="border-l border-slate-900/10 pl-6 text-sm text-slate-500 dark:border-white/10 dark:text-slate-400 max-lg:border-l-0 max-lg:pl-0">
+          <p class="font-medium text-slate-900 dark:text-white">当前阅读线索</p>
+          <p class="mt-3 leading-7">从最小任务闭环开始，再进入技能系统与仓库协作，最后回到实际项目搭建。</p>
+          <a
+            href="/tags/OpenClaw/"
+            class="mt-5 inline-flex text-[oklch(48%_0.05_208)] no-underline dark:text-[oklch(76%_0.04_205)]"
+          >
+            查看 OpenClaw 标签
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-8">
+      <div class="mb-5 flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-[clamp(2rem,4vw,3rem)] font-semibold text-slate-950 dark:text-white">文章</h2>
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">最新更新优先展示，适合顺序阅读。</p>
+        </div>
+      </div>
+
+      <div>
+        <PostList posts={page.data} />
+      </div>
+    </section>
+
+    <section class="flex items-center justify-end gap-4 py-8 max-[768px]:justify-center">
+      <Pagination page={page} />
+    </section>
+  </main>
+</BaseLayout>

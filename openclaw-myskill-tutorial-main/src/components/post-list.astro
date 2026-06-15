@@ -1,0 +1,51 @@
+---
+import { getPostLink } from '@constant'
+
+import type { PostModel } from '@interfaces/post-model'
+import { getMD } from '@utils/date-helper'
+
+interface Props {
+  posts: PostModel[]
+}
+
+const { posts } = Astro.props
+---
+
+{
+  posts.map((post) => (
+    <article class="group border-t border-slate-900/10 py-7 first:border-t-0 dark:border-white/10">
+      <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
+        <div class="space-y-3">
+          <div class="flex flex-wrap gap-x-3 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
+            <time datetime={post.data.date.toISOString()}>{getMD(post.data.date)}</time>
+            <span>·</span>
+            <span>{post.data.tags?.join(' / ')}</span>
+          </div>
+          <a
+            class="block max-w-3xl text-[clamp(1.55rem,2.6vw,2.35rem)] font-semibold leading-tight text-slate-950 no-underline transition-colors group-hover:text-[oklch(56%_0.12_202)] dark:text-white dark:group-hover:text-[oklch(79%_0.06_200)]"
+            href={getPostLink(post)}
+          >
+            {post.data.title}
+          </a>
+          <p class="max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-300">{post.data.description}</p>
+          <div class="flex flex-wrap gap-x-3 gap-y-2 pt-1">
+            {post.data.tags?.map((tag) => (
+              <a
+                class="text-sm text-[oklch(48%_0.05_208)] no-underline transition-colors hover:text-[oklch(56%_0.12_202)] dark:text-[oklch(76%_0.04_205)]"
+                href={'/tags/' + tag}
+              >
+                #{tag}
+              </a>
+            ))}
+          </div>
+        </div>
+        <a
+          class="self-start whitespace-nowrap pt-1 text-sm font-medium text-slate-500 no-underline transition-colors group-hover:text-slate-950 dark:text-slate-400 dark:group-hover:text-white"
+          href={getPostLink(post)}
+        >
+          阅读
+        </a>
+      </div>
+    </article>
+  ))
+}

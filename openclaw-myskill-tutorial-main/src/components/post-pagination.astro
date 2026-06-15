@@ -1,0 +1,39 @@
+---
+import { config } from '@constant'
+
+import type { PostModel } from '@interfaces/post-model'
+
+interface Props {
+  prev: PostModel | undefined
+  next: PostModel | undefined
+}
+
+const { prev, next } = Astro.props
+---
+
+<div class="mt-5 flex justify-between gap-x-12 py-2 max-[768px]:py-5">
+  {
+    prev ? (
+      <div class="flex w-[50%] flex-1 flex-col gap-1 rounded-[1.25rem] border border-slate-200/70 bg-white/70 p-4 text-left dark:border-white/10 dark:bg-slate-950/65">
+        <span class="font-mono text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">Previous Signal</span>
+        <a href={'/posts/' + prev.data[config.linkAttr]} class="truncate no-underline">
+          {prev.data.title}
+        </a>
+      </div>
+    ) : (
+      <span class="flex-1" />
+    )
+  }
+  {
+    next ? (
+      <div class="flex flex-1 flex-col justify-items-end gap-1 rounded-[1.25rem] border border-slate-200/70 bg-white/70 p-4 text-right dark:border-white/10 dark:bg-slate-950/65">
+        <span class="font-mono text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">Next Signal</span>
+        <a href={'/posts/' + next.data[config.linkAttr]} class="truncate no-underline">
+          {next.data.title}
+        </a>
+      </div>
+    ) : (
+      <span class="flex-1" />
+    )
+  }
+</div>

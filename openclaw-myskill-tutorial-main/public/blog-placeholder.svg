@@ -1,0 +1,25 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#07131D" />
+  <rect width="1200" height="630" fill="url(#paint0_radial_3_6)" />
+  <rect x="56" y="56" width="1088" height="518" rx="34" fill="rgba(7,19,29,0.72)" stroke="rgba(156,248,255,0.18)" />
+  <path d="M156 404L267 188H360L246 404H156Z" fill="#F8FDFF" />
+  <path d="M336 431L441 219H542L434 431H336Z" fill="#22D3EE" />
+  <path d="M516 431L621 219H657C702.84 219 740 256.16 740 302V431H516Z" fill="#9CF8FF" />
+  <circle cx="789" cy="180" r="26" fill="#22D3EE" />
+  <path d="M797 262H1014" stroke="#9CF8FF" stroke-width="6" stroke-linecap="round" />
+  <path d="M797 316H1080" stroke="#23485D" stroke-width="6" stroke-linecap="round" />
+  <path d="M797 370H956" stroke="#23485D" stroke-width="6" stroke-linecap="round" />
+  <text x="797" y="468" fill="#F8FDFF" font-family="Space Grotesk, sans-serif" font-size="56" font-weight="700">
+    OpenClaw Signal
+  </text>
+  <text x="797" y="526" fill="#9CB9C9" font-family="JetBrains Mono, monospace" font-size="24" letter-spacing="4">
+    ASTRO STATIC BLOG / TUTORIAL FIELD NOTES
+  </text>
+  <defs>
+    <radialGradient id="paint0_radial_3_6" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(238 126) rotate(19.7396) scale(658.381 503.659)">
+      <stop stop-color="#14364A" />
+      <stop offset="0.52" stop-color="#0A1822" />
+      <stop offset="1" stop-color="#07131D" />
+    </radialGradient>
+  </defs>
+</svg>

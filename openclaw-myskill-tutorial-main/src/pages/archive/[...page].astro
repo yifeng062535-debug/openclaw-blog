@@ -1,0 +1,43 @@
+---
+import { config } from '@constant'
+import type { Page, PaginateFunction } from 'astro'
+
+import NavHead from '@components/nav-header.astro'
+import Pagination from '@components/pagination.astro'
+import PostList from '@components/post-list.astro'
+import BaseLayout from '@layouts/base-layout.astro'
+import { getAllPosts } from '@utils/all-posts'
+
+interface Props {
+  page: Page
+}
+
+export const getStaticPaths = async ({ paginate }: { paginate: PaginateFunction }) => {
+  const blogs = await getAllPosts()
+
+  return paginate(blogs, { pageSize: config.postsPerPage })
+}
+
+const { page } = Astro.props
+const title = '教程归档'
+const description = '按时间顺序浏览 OpenClaw 教学博客中的全部文章'
+---
+
+<BaseLayout title={title} description={description}>
+  <NavHead />
+  <main class="pb-8">
+    <section class="mt-4 rounded-[2rem] border border-white/40 bg-white/72 p-6 dark:border-white/10 dark:bg-slate-950/70">
+      <p class="font-mono text-xs uppercase tracking-[0.32em] text-cyan-700 dark:text-cyan-300">Archive</p>
+      <h1 class="mt-3 text-3xl font-semibold text-slate-950 dark:text-white">{title}</h1>
+      <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300">{description}</p>
+    </section>
+
+    <section class="mt-6 grid gap-5 p-1 lg:grid-cols-2">
+      <PostList posts={page.data} />
+    </section>
+
+    <section class="flex items-center justify-end gap-4 py-5 max-[768px]:justify-center">
+      <Pagination page={page} />
+    </section>
+  </main>
+</BaseLayout>
